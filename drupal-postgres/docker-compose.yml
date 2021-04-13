@@ -1,0 +1,30 @@
+version: '3'
+  
+services:
+  backend:
+    image: postgres
+    environment:
+            POSTGRES_PASSWORD: my-secret-pw
+    volumes:
+            - psql_db:/var/lib/mysql:rw
+
+
+  frontend:
+    image: drupal
+    ports:
+      - '8080:80'
+    volumes:
+          -  drupal-modules:/var/www/html/modules       
+          -  drupal-profiles:/var/www/html/profiles         
+          -  drupal-sites:/var/www/html/sites      
+          -  drupal-themes:/var/www/html/themes
+    depends_on:
+        - backend
+
+volumes:
+        psql_db:
+        drupal-modules:
+        drupal-profiles:
+        drupal-sites:
+        drupal-themes:
+
